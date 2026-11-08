@@ -2,6 +2,7 @@ package office.attendance.employee.application;
 
 import office.attendance.employee.domain.Employee;
 import office.attendance.employee.domain.EmployeeRespository;
+import office.attendance.identity.application.AccountService;
 import office.attendance.shared.error.ConflictException;
 import office.attendance.shared.error.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,15 @@ import java.util.UUID;
 public class EmployeeService {
 
     private final EmployeeRespository repository;
+    private final AccountService accountService;
 
-    public EmployeeService(EmployeeRespository repository) {
+    public EmployeeService(EmployeeRespository repository, AccountService accountService) {
         this.repository = repository;
+        this.accountService = accountService;
     }
 
     @Transactional
-    public Employee create(String employeeNumber, String fullName, String email) {
+    public Employee create(String employeeNumber, String fullName, String email, String temporaryPassword) {
         String normalizedEmail = email.trim().toLowerCase();
         String number = employeeNumber.trim();
 
@@ -33,7 +36,18 @@ public class EmployeeService {
 
         Employee employee = Employee.register(number, fullName.trim(), normalizedEmail);
         repository.insert(employee);
+        accountService.createEmployeeAccount(employee.getId(), normalizedEmail, temporaryPassword);
         return employee;
+    }
+
+    /** For employees created before login existed. */
+    @Transactional
+    public void createAccount(UUID employeeId, String temporaryPassword) {
+        Employee employee = get(employeeId);
+        if (!employee.isActive()) {
+            throw new ConflictException("Employee is inactive: " + employeeId);
+        }
+        accountService.createEmployeeAccount(employeeId, employee.getEmail(), temporaryPassword);
     }
 
     @Transactional
@@ -54,6 +68,7 @@ public class EmployeeService {
     public Employee deactivate(UUID id) {
         Employee deactivated = get(id).deactivated();
         repository.update(deactivated);
+        accountService.deactivateForEmployee(id);
         return deactivated;
     }
 

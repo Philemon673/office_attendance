@@ -24,3 +24,12 @@ management:
     web:
       exposure:
         include: health,info
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:}
+      expiration-minutes: 480
+  bootstrap:
+    admin-email: ${ADMIN_EMAIL:}
+    admin-password: ${ADMIN_PASSWORD:}

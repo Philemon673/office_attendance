@@ -3,6 +3,7 @@ package office.attendance.employee.web;
 import jakarta.validation.Valid;
 import office.attendance.employee.application.EmployeeService;
 import office.attendance.employee.domain.Employee;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,10 +24,17 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<EmployeeResponse> create(@Valid @RequestBody CreateEmployeeRequest request) {
-        Employee created = service.create(request.employeeNumber(), request.fullName(), request.email());
+        Employee created = service.create(
+                request.employeeNumber(), request.fullName(), request.email(), request.temporaryPassword());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(location).body(EmployeeResponse.from(created));
+    }
+
+    @PostMapping("/{id}/account")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createAccount(@PathVariable UUID id, @Valid @RequestBody CreateAccountRequest request) {
+        service.createAccount(id, request.temporaryPassword());
     }
 
     @GetMapping
