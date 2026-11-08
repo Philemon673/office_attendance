@@ -1,4 +1,14 @@
 package office.attendance.roster.web;
 
-public record AssignRosterRequest() {
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+public record AssignRosterRequest(
+        @NotNull UUID employeeId,
+        @NotNull UUID shiftId,
+        @NotEmpty List<@NotNull LocalDate> dates) {
 }
