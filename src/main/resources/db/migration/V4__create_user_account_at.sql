@@ -1,0 +1,1 @@
+ALTER TABLE user_account RENAME COLUMN update_at TO updated_at;
