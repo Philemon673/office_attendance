@@ -35,3 +35,10 @@ app:
   attendance:
     zone: Africa/Douala
     check-in-opens-minutes-before: 60
+  notification:
+    from: attendance@company.com
+    employer-emails: ${EMPLOYER_EMAILS:employer@company.com}
+    zone: ${app.attendance.zone}
+    max-attempts: 5
+    batch-size: 20
+    poll-interval-ms: 5000

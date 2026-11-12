@@ -31,7 +31,7 @@ public class AttendanceRecord {
 
     public static AttendanceRecord checkIn(UUID employeeId, LocalDate workDate, UUID shiftId,
                                            Instant shiftStart, int graceMinutes, Instant checkInAt) {
-        Instant lateAfter = shiftStart.plus(Duration.ofMinutes(graceMinutes));
+        Instant lateAfter = shiftStart.plus( Duration.ofMinutes(graceMinutes));
         boolean late = checkInAt.isAfter(lateAfter);
         int lateMinutes = late ? (int) Duration.between(shiftStart, checkInAt).toMinutes() : 0;
         return new AttendanceRecord(UUID.randomUUID(), employeeId, workDate, shiftId, checkInAt, null,
