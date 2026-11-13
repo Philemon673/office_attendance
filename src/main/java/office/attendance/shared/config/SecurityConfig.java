@@ -46,6 +46,12 @@ public class SecurityConfig {
                                 "/api/v1/rosters/**",
                                 "/api/v1/qr/**",
                                 "/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/employees/**",
+                                "/api/v1/shifts/**",
+                                "/api/v1/rosters/**",
+                                "/api/v1/qr/**",
+                                "/api/v1/admin/**",
+                                "/api/v1/reports/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth -> oauth
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
