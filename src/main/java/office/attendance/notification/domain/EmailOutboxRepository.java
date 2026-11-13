@@ -12,8 +12,10 @@ public interface EmailOutboxRepository {
 
     List<EmailOutboxMessage> lockDue(int limit, Instant now);
 
-    void markSent (UUID id);
-    void markReceived(UUID id);
+    void markSent (UUID id, Instant sentAt);
+
+
+    void markRetry(UUID id, int attempts, Instant nextAttemptAt, String error);
 
     void markFailed(UUID id, int attempts, String error);
 }

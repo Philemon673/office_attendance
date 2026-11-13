@@ -4,6 +4,7 @@ import office.attendance.attendance.domain.AttendanceStatus;
 import office.attendance.attendance.domain.CheckedInEvent;
 import office.attendance.notification.domain.EmailOutboxMessage;
 import office.attendance.notification.domain.EmailOutboxRepository;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
@@ -13,7 +14,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class CheckInNotificationListener {
 

@@ -5,6 +5,7 @@ import office.attendance.notification.domain.EmailOutboxRepository;
 import office.attendance.notification.domain.OutboxStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -12,6 +13,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public class JdbcEmailOutboxRepository implements EmailOutboxRepository {
     private static final RowMapper<EmailOutboxMessage> MAPPER = (rs, i) -> new EmailOutboxMessage(
             rs.getObject("id", UUID.class),

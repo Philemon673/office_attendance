@@ -5,12 +5,14 @@ import office.attendance.notification.domain.EmailOutboxRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
+@Component
 
 public class OutboxProcessor {
     private static final Logger log = LoggerFactory.getLogger(OutboxProcessor.class);

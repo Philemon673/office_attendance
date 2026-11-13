@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee check-in</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #222;">
+<h2>Employee check-in</h2>
+<p>
+    <strong th:text="${employeeName}">Name</strong> checked in on
+    <span th:text="${date}">Monday 9 November 2026</span> at
+    <strong th:text="${time}">08:00</strong>.
+</p>
+<p>Shift: <span th:text="${shiftName}">Morning</span></p>
+<p th:if="${late}" style="color: #b00020;">
+    Status: <strong>LATE</strong> by <span th:text="${lateMinutes}">0</span> minutes.
+</p>
+<p th:unless="${late}" style="color: #1b7f3b;">Status: <strong>On time</strong></p>
+</body>
+</html>
